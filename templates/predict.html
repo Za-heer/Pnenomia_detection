@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Display Result -->
+        {% if result and confidence %}
+        <div class="result_container">
+            <p class="result">Result: {{ result }}</p>
+            <p style="color: red; font-size: large; font-weight: bold;">Confidence: {{ confidence }}</p>
+        </div>
+        <!-- {% elif result %}
+        <p style="color: red;">{{ result }}</p> -->
+        {% endif %}
+
+        <!-- Display Uploaded Image -->
+        {% if image_file %}
+        <h2 class="result_heading">Uploaded Image:</h2>
+        <img src="{{ url_for('send_image', filename=image_file) }}" alt="Uploaded Chest X-ray"
+            style="max-width:500px; margin-top:10px;">
+        <br>
+        <a href="{{ url_for('home_page') }}" class="try_btn">Try Another Image</a>
+        {% endif %}
+
+    </div>
+</body>
+
+</html>
