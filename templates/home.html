@@ -1,25 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pneumonia Detection</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ request.url_for('static', path='style.css') }}"
+    />
+  </head>
 
-<body>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <h2>Pneumonia Detection</h2>
+      <div>
+        <a href="{{ request.url_for('home') }}">Home</a>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
     <div class="container">
-        <h1>Pneumonia Detection</h1>
-        <!-- Upload Form -->
-        <form method="POST" action="{{ url_for('predict') }}" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*" required class="file_input">
-            <input type="submit" value="Predict" class="btn">
-        </form>
+      <h1 class="title">Upload Chest X-ray</h1>
+      <p class="subtitle">
+        Our AI model will detect whether the image shows Pneumonia or Normal
+        lungs.
+      </p>
 
-
-
+      <!-- Upload Form -->
+      <form
+        id="predictForm"
+        method="POST"
+        action="{{ request.url_for('predict') }}"
+        enctype="multipart/form-data"
+        class="upload_form"
+      >
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          required
+          class="file_input"
+        />
+        <button type="submit" id="predictBtn" class="btn">Predict</button>
+        <div id="spinner" class="spinner"></div>
+      </form>
     </div>
-</body>
 
+    <!-- JS to handle spinner -->
+    <script>
+      const form = document.getElementById("predictForm");
+      const button = document.getElementById("predictBtn");
+      const spinner = document.getElementById("spinner");
+
+      form.addEventListener("submit", function () {
+        button.disabled = true;
+        spinner.style.display = "inline-block";
+      });
+    </script>
+  </body>
 </html>

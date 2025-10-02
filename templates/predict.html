@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pneumonia Detection - Result</title>
+    <link
+      rel="stylesheet"
+      href="{{ request.url_for('static', path='style.css') }}"
+    />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <h2>Pneumonia Detection</h2>
+      <div>
+        <a href="{{ request.url_for('home') }}">Home</a>
+      </div>
+    </nav>
 
-<body>
+    <!-- Main Container -->
     <div class="container">
-        <!-- Display Result -->
-        {% if result and confidence %}
-        <div class="result_container">
-            <p class="result">Result: {{ result }}</p>
-            <p style="color: red; font-size: large; font-weight: bold;">Confidence: {{ confidence }}</p>
-        </div>
-        <!-- {% elif result %}
-        <p style="color: red;">{{ result }}</p> -->
-        {% endif %}
-
-        <!-- Display Uploaded Image -->
-        {% if image_file %}
+      {% if result and confidence %}
+      <div class="card">
+        <h2 class="result_title">Prediction Result</h2>
+        <p class="result">Result: <strong>{{ result }}</strong></p>
+        <p class="confidence">Confidence: {{ confidence }}</p>
+      </div>
+      {% endif %} {% if image_file %}
+      <div class="card">
         <h2 class="result_heading">Uploaded Image:</h2>
-        <img src="{{ url_for('send_image', filename=image_file) }}" alt="Uploaded Chest X-ray"
-            style="max-width:500px; margin-top:10px;">
-        <br>
-        <a href="{{ url_for('home_page') }}" class="try_btn">Try Another Image</a>
-        {% endif %}
-
+        <img
+          src="{{ request.url_for('static', path='uploads/' + image_file) }}"
+          alt="Uploaded Chest X-ray"
+          class="uploaded_img"
+        />
+        <br />
+        <a href="{{ request.url_for('home') }}" class="btn try_btn"
+          >Try Another Image</a
+        >
+      </div>
+      {% endif %}
     </div>
-</body>
-
+  </body>
 </html>
